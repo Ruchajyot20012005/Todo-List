@@ -1,0 +1,7 @@
+.user__data {
+  padding-top: 30px;
+  display: flex;
+  background: white;
+  margin: 32px 16px;
+  justify-content: space-between;
+}

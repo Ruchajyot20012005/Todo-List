@@ -1,0 +1,17 @@
+.top__section {
+  width: 100%;
+  height: 50vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top__section > h1 {
+  font-size: 50px;
+}
+.top__section > h3 {
+  color: #e8721c;
+  margin-top: 16px;
+}

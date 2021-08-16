@@ -1,0 +1,29 @@
+.outer__block {
+  width: 50%;
+  margin-left: 30px;
+}
+.user__info {
+  position: sticky;
+  top: 0;
+}
+.user__info > h5 {
+  color: #e8721c;
+  background: #f8d5bb;
+  padding: 20px 16px;
+  margin: 20px 30px 20px 0px;
+}
+.datails__cell {
+  display: flex;
+  justify-content: space-between;
+}
+.details {
+  background: #f8d5bb;
+  padding: 0 16px;
+  margin: 20px 30px 20px 0px;
+  color: #e8721c;
+  font-weight: bold;
+}
+.datails__cell > p {
+  margin: 20px 4px;
+  width: 75%;
+}
