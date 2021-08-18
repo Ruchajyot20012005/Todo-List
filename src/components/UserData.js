@@ -1,7 +1,7 @@
 import React from "react";
 import "./UserData.css";
-import UsersList from "./UsersList";
 import UserInfo from "./UserInfo";
+import UsersList from "./UsersList";
 
 function UserData() {
   return (

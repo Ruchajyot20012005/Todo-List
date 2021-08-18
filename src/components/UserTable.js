@@ -1,8 +1,6 @@
-import React from "react";
-import "./UsersTable.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchTodo } from "../Redux/users/usersActions";
+import { useEffect, useState } from "react";
+import { fetchTodo, fetchuserId } from "../Redux/users/usersActions";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,7 +9,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
-import { useState } from "react";
+import { TableSortLabel } from "@material-ui/core";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -57,12 +55,13 @@ function UserTable({ data }) {
   const userData = useSelector((state) => (state = state.user));
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [sort, setSort] = useState();
+  const [status, setStatus] = useState(["complete", "incomplete"]);
+  const [sort, setSort] = useState("asc");
   const [sortBy, setSortBy] = useState();
 
-  const handleSortRequest = (cellId) => {
+  const handleSortReqest = (cellId) => {
     const isAsc = sortBy === cellId && sort === "asc";
-    setSort(isAsc ? "desc" : "asc");
+    setSort(isAsc === "asc" ? "desc" : "asc");
     setSortBy(cellId);
   };
 
@@ -75,7 +74,11 @@ function UserTable({ data }) {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Todo ID</StyledTableCell>
+            <StyledTableCell>
+              <TableSortLabel onClick={() => handleSortReqest()}>
+                Todo ID
+              </TableSortLabel>
+            </StyledTableCell>
             <StyledTableCell>Title</StyledTableCell>
             <StyledTableCell>Status</StyledTableCell>
             <StyledTableCell>Action</StyledTableCell>
@@ -84,7 +87,7 @@ function UserTable({ data }) {
         <TableBody>
           {userData.users
             .filter((items) => {
-              if (data == "") {
+              if (data === "") {
                 return items;
               } else if (data == items.id) {
                 return items;
@@ -92,8 +95,14 @@ function UserTable({ data }) {
                 items.title.toLowerCase().includes(data.toLowerCase())
               ) {
                 return items;
-              } else if (items.Completed) {
-                return items;
+              } else if (status[0].toLowerCase().includes(data.toLowerCase())) {
+                if (items.completed == true) {
+                  return items;
+                }
+              } else if (status[1].toLowerCase().includes(data.toLowerCase())) {
+                if (items.completed == false) {
+                  return items;
+                }
               }
             })
             .map((todo) => (
@@ -108,6 +117,20 @@ function UserTable({ data }) {
                     variant="contained"
                     size="small"
                     className={classes.margin}
+                    value={todo.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const id = todo.userId;
+                      const todo_id = todo.id;
+                      const title = todo.title;
+                      dispatch(
+                        fetchuserId({
+                          userID: id,
+                          todoId: todo_id,
+                          todoTitle: title,
+                        })
+                      );
+                    }}
                   >
                     View User
                   </Button>

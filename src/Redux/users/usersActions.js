@@ -3,9 +3,7 @@ import {
   FETCH_USER_REQUEST,
   FETCH_USER_SUCCEESS,
   FETCH_USER_FAILURE,
-  FETCH_USERI_REQUEST,
-  FETCH_USERI_SUCCEESS,
-  FETCH_USERI_FAILURE,
+  FETCH_USER_ID,
 } from "./usersTypes";
 
 export const fetchUserReuest = () => {
@@ -13,38 +11,16 @@ export const fetchUserReuest = () => {
     type: FETCH_USER_REQUEST,
   };
 };
-
-export const fetchUseriReuest = () => {
-  return {
-    type: FETCH_USERI_REQUEST,
-  };
-};
-
 const fetchUserSuccess = (users) => {
   return {
     type: FETCH_USER_SUCCEESS,
     payload: users,
   };
 };
-
-const fetchUseriSuccess = (usersi) => {
-  return {
-    type: FETCH_USERI_SUCCEESS,
-    payload: usersi,
-  };
-};
-
 const fetchUserFailure = (error) => {
   return {
-    type: FETCH_USERI_FAILURE,
-    payload: error,
-  };
-};
-
-const fetchUseriFailure = (errori) => {
-  return {
     type: FETCH_USER_FAILURE,
-    payload: errori,
+    payload: error,
   };
 };
 
@@ -65,18 +41,13 @@ export const fetchTodo = () => {
   };
 };
 
-export const fetchUsers = () => {
-  return (dispatch) => {
-    dispatch(fetchUseriReuest);
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        const useri = response.data;
-        dispatch(fetchUseriSuccess(useri));
-      })
-      .catch((errori) => {
-        const errorMsg = errori.messsage;
-        dispatch(fetchUseriFailure(errorMsg));
-      });
+export const fetchuserId = (id) => {
+  return (dispatch) => dispatch(fetchId(id));
+};
+
+export const fetchId = (id) => {
+  return {
+    type: FETCH_USER_ID,
+    payload: id,
   };
 };
