@@ -27,3 +27,25 @@
   margin: 20px 4px;
   width: 75%;
 }
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .outer__block {
+    width: 100%;
+    margin: 20px 10px;
+  }
+  .user__info {
+    width: inherit;
+  }
+  .user__info > h5 {
+    margin: 20px 10px;
+  }
+  .user__info > h2 {
+    font-size: 25px;
+  }
+  .details {
+    padding: 0 16px;
+    margin: 0 10px;
+    color: #e8721c;
+    font-weight: bold;
+  }
+}

@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    table: {
+      minWidth: 300,
+    },
+  },
 }));
 
 function UserTable({ data }) {
@@ -56,14 +61,7 @@ function UserTable({ data }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [status, setStatus] = useState(["complete", "incomplete"]);
-  const [sort, setSort] = useState("asc");
-  const [sortBy, setSortBy] = useState();
-
-  const handleSortReqest = (cellId) => {
-    const isAsc = sortBy === cellId && sort === "asc";
-    setSort(isAsc === "asc" ? "desc" : "asc");
-    setSortBy(cellId);
-  };
+  const data2 = userData.users;
 
   useEffect((e) => {
     dispatch(fetchTodo());
@@ -75,9 +73,7 @@ function UserTable({ data }) {
         <TableHead>
           <TableRow>
             <StyledTableCell>
-              <TableSortLabel onClick={() => handleSortReqest()}>
-                Todo ID
-              </TableSortLabel>
+              <TableSortLabel>Todo ID</TableSortLabel>
             </StyledTableCell>
             <StyledTableCell>Title</StyledTableCell>
             <StyledTableCell>Status</StyledTableCell>
@@ -85,7 +81,7 @@ function UserTable({ data }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {userData.users
+          {[...data2]
             .filter((items) => {
               if (data === "") {
                 return items;

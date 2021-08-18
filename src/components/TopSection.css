@@ -15,3 +15,12 @@
   color: #e8721c;
   margin-top: 16px;
 }
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .top__section > h1 {
+    font-size: 25px;
+  }
+  .top__section > h3 {
+    margin-top: 8px;
+  }
+}
