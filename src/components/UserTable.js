@@ -36,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
   sort: {
     backgroundColor: "#f8d5bb",
   },
+  sortIcon: {
+    color: "#e8721c",
+    "&:hover": {
+      color: "#e8721c",
+    },
+  },
   margin: {
     backgroundColor: "#ea8033",
     color: "white",
@@ -59,10 +65,22 @@ const useStyles = makeStyles((theme) => ({
 function UserTable({ data }) {
   const userData = useSelector((state) => (state = state.user));
   const dispatch = useDispatch();
+  const [direction, setDirection] = useState("desc");
   const classes = useStyles();
   const [status, setStatus] = useState(["complete", "incomplete"]);
   const data2 = userData.users;
+  const sortData = JSON.parse(JSON.stringify(data2));
+  sortData.sort((a, b) => (a.id < b.id ? 1 : -1));
 
+  const sortIds = (direction) => {
+    if (direction === "desc") {
+      setDirection("asc");
+    } else {
+      setDirection("desc");
+    }
+  };
+
+  console.log(sortData);
   useEffect((e) => {
     dispatch(fetchTodo());
   }, []);
@@ -73,7 +91,14 @@ function UserTable({ data }) {
         <TableHead>
           <TableRow>
             <StyledTableCell>
-              <TableSortLabel>Todo ID</TableSortLabel>
+              <TableSortLabel
+                className={classes.sortIcon}
+                active={direction === "asc" ? true : false}
+                direction={direction}
+                onClick={() => sortIds(direction)}
+              >
+                Todo ID
+              </TableSortLabel>
             </StyledTableCell>
             <StyledTableCell>Title</StyledTableCell>
             <StyledTableCell>Status</StyledTableCell>
@@ -81,7 +106,7 @@ function UserTable({ data }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {[...data2]
+          {(direction === "desc" ? data2 : sortData)
             .filter((items) => {
               if (data === "") {
                 return items;
